@@ -14,11 +14,14 @@ class HapticManager(private val context: Context) {
     }
 
     fun breakthrough() {
-        vibrate(100)
-        Thread.sleep(100)
-        vibrate(50)
-        Thread.sleep(50)
-        vibrate(100) // Double pulse
+        try {
+            val timings = longArrayOf(0, 90, 60, 50, 60, 110)
+            val amplitudes = intArrayOf(0, 200, 0, 120, 0, 255)
+            val effect = VibrationEffect.createWaveform(timings, amplitudes, -1)
+            vibrator?.vibrate(effect)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun vibrate(ms: Long) {
